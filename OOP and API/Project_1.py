@@ -85,7 +85,7 @@ class Lecturer(Mentor):
         return f'Лектор\n' \
                f'Имя: {self.name}\n' \
                f'Фамилия: {self.surname}\n' \
-               f'Средняя оценка за лекции:: {avg_rate_lector:.2f}\n'
+               f'Средняя оценка за лекции: {avg_rate_lector:.2f}\n'
 
 
 class Reviewer(Mentor):
