@@ -2,6 +2,7 @@ import requests
 import os
 import logging
 from dotenv import load_dotenv
+from urllib.parse import urljoin
 from logging_config import setup_logging
 
 # Загружаем переменные окружения
@@ -21,10 +22,10 @@ class ApiYd:
         self.headers = {
             'Authorization': f'OAuth {self.yd_api_key}'
         }
-        self.folder_url = f'{self.base_url}/v1/disk/resources'
+        self.folder_url = urljoin(self.base_url, '/v1/disk/resources')
 
     def create_new_folder(self, folder_name):
-        params = {'path': f'/{folder_name.lstrip("/")}'}  # Убедитесь, что путь начинается с /
+        params = {'path': f'/{folder_name.lstrip("/")}'}
         response = requests.put(self.folder_url, headers=self.headers, params=params)
         if response.status_code == 201:
             logging.info(f'Папка "{folder_name}" успешно создана.')
@@ -38,7 +39,7 @@ class ApiYd:
             logging.error(f'Папка {local_folder} не найдена.')
             return
 
-        upload_url = f'{self.folder_url}/upload'
+        upload_url = urljoin(self.base_url, '/v1/disk/resources/upload')
         yd_folder = f'/{yd_folder.lstrip("/")}'
 
         for filename in os.listdir(local_folder):

@@ -2,7 +2,7 @@ import requests
 import os
 import json
 import logging
-from pprint import pprint
+from urllib.parse import urljoin
 from dotenv import load_dotenv
 from logging_config import setup_logging
 
@@ -25,7 +25,9 @@ class ApiVK:
         logging.info("Инициализация класса ApiVK завершена.")
 
     def get_friends(self, user_id, count=5):
-        url = f'{self.base}friends.get'
+        # Формируем URL с помощью urljoin
+        endpoint = 'friends.get'
+        url = urljoin(self.base, endpoint)
         params = {
             'user_id': user_id,
             'count': count,
@@ -41,7 +43,9 @@ class ApiVK:
         return response.json()
 
     def get_photos(self, user_id, count=10):
-        url = f'{self.base}photos.get'
+        # Формируем URL с помощью urljoin
+        endpoint = 'photos.get'
+        url = urljoin(self.base, endpoint)
         params = {
             'owner_id': user_id,
             'count': count,
@@ -50,14 +54,35 @@ class ApiVK:
         }
         params.update(self.params)
         logging.info(f"Запрос фотографий для user_id={user_id}, количество={count}.")
-        response = requests.get(url, params=params)
-        if response.status_code == 200:
-            logging.info(f"Фотографии успешно получены.")
-        else:
-            logging.error(f"Ошибка при получении фотографий: {response.status_code}, {response.text}")
-        response = response.json()
-        info = response.get('response', {}).get('items', {})
-        return info
+
+        try:
+            response = requests.get(url, params=params)
+
+            # Логируем статус ответа
+            if response.status_code == 200:
+                logging.info("Фотографии успешно получены.")
+            else:
+                logging.error(f"Ошибка при получении фотографий: {response.status_code}, {response.text}")
+                raise Exception(f"Ошибка API: {response.status_code}, {response.text}")
+
+            # Пытаемся разобрать JSON только при успешном статусе
+            data = response.json()
+
+            # Проверяем структуру ответа
+            info = data.get('response', {}).get('items', [])
+            if not info:
+                logging.warning("Ответ не содержит фотографий.")
+
+            return info
+        except requests.exceptions.RequestException as e:
+            # Обработка ошибок сети (например, timeout, connection error)
+            logging.error(f"Сетевая ошибка: {e}")
+            raise Exception(f"Сетевая ошибка: {e}")
+
+        except ValueError as e:
+            # Обработка ошибок при парсинге JSON
+            logging.error(f"Ошибка при разборе JSON: {e}")
+            raise Exception(f"Ошибка при разборе JSON: {e}")
 
     def create_name(self, item):
         name = []

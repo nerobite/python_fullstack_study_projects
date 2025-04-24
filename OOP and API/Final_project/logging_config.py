@@ -6,7 +6,7 @@ def setup_logging():
     Логи записываются в файл и выводятся в консоль.
     """
     logging.basicConfig(
-        level=logging.INFO,
+        level=logging.ERROR,
         format='%(asctime)s - %(levelname)s - %(message)s',
         handlers=[
             logging.FileHandler("all_logs.log", encoding='utf-8'),  # Указываем кодировку utf-8

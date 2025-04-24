@@ -55,4 +55,5 @@ def loader_from_vk_to_yadisk(vk_token, yd_token, user_id, count):
         logging.error(f"Произошла ошибка: {e}")
 
 
-loader_from_vk_to_yadisk(vk_api_key, yd_api_key, '52112515', 5)
+if __name__ == '__main__':
+    loader_from_vk_to_yadisk(vk_api_key, yd_api_key, '52112515', 5)
