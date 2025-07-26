@@ -1,0 +1,4 @@
+{'date': '2025-07-26 10:10:09.164469', 'function_name': 'hello_world', 'args': (), 'kwargs': {}, 'result': 'Hello World'}
+{'date': '2025-07-26 10:10:09.164469', 'function_name': 'summator', 'args': (2, 2), 'kwargs': {}, 'result': 4}
+{'date': '2025-07-26 10:10:09.164469', 'function_name': 'div', 'args': (6, 2), 'kwargs': {}, 'result': 3.0}
+{'date': '2025-07-26 10:10:09.164469', 'function_name': 'summator', 'args': (4.3,), 'kwargs': {'b': 2.2}, 'result': 6.5}
