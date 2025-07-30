@@ -3,7 +3,8 @@ import os
 import logging
 from dotenv import load_dotenv
 from urllib.parse import urljoin
-from logging_config import setup_logging
+from .logging_config import setup_logging
+
 
 # Загружаем переменные окружения
 load_dotenv()
@@ -78,7 +79,7 @@ class ApiYd:
 
 if __name__ == '__main__':
     yam = ApiYd(yd_api_key)
-    # yam.create_new_folder('52112515')
-    # responce = yam.load_photo('vk_photos', '52112515')
-    # print(responce)
-    yam.delete_folder('52112515')
+    yam.create_new_folder('52112515')
+    responce = yam.load_photo('vk_photos', '52112515')
+    print(responce)
+    #yam.delete_folder('52112515')
