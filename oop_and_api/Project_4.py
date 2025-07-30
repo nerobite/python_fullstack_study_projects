@@ -22,12 +22,14 @@ def get_the_smartest_superhero() -> str:
                 the_smartest_superhero = data_list['name']
     return the_smartest_superhero
 
+print(f'Самый умный супергерой - {get_the_smartest_superhero()}')
+
 """
 Есть API по информации о супергероях с информацией по всем супергероям.
 Теперь нужно найти самого умного супергероя среди списка супергероев.
 Напишите функцию get_the_smartest_superhero, которая принимает на вход список superheros, состоящий из id.
 """
-def get_the_smartest_superhero(superheros):
+def get_the_smartest_superhero_ids(superheros):
     the_smartest_superhero = ''
     url = 'https://akabab.github.io/superhero-api/api/all.json'
     response = requests.get(url)
@@ -38,6 +40,8 @@ def get_the_smartest_superhero(superheros):
                 intelect = data_list['powerstats']['intelligence']
                 the_smartest_superhero = data_list['name']
     return the_smartest_superhero
+
+print(f'Самый умный супергерой из списка - {get_the_smartest_superhero_ids([1, 2, 3, 4, 5])}')
 
 """
 У Яндекса есть очень удобное API для словарей(https://yandex.ru/dev/dictionary/).
@@ -57,6 +61,8 @@ def translate_word(word):
     }
     response = requests.get(url, params=params)
     return response.json()['def'][0]['tr'][0]['text']
+
+print(f'Получено слово {"питон"} перевод {translate_word("питон")}')
 
 """
 Альберт Эйнштейн, возвращаясь из своей очередной научной конференции, решил разыграть свою жену. Он ей рассказал,
@@ -95,4 +101,4 @@ def find_uk_city(coordinates:list) -> str:
         if city in uk_list:
             return city
 
-print(find_uk_city(coordinates))
+print(f'Город который понравился Эйнштейну - {find_uk_city(coordinates)}')
